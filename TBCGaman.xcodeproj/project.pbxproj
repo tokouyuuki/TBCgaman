@@ -3,19 +3,43 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77C683142CCA989791A0451E /* Pods_TBCGaman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A70154FF193C33E9A85019A /* Pods_TBCGaman.framework */; };
+		86043CB62708D86600DA65FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86043CB52708D86600DA65FA /* GoogleService-Info.plist */; };
+		86043CBB2709408400DA65FA /* UserIDLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86043CBA2709408400DA65FA /* UserIDLoadModel.swift */; };
 		862761852704B45100ACF0DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761842704B45100ACF0DE /* AppDelegate.swift */; };
 		862761872704B45100ACF0DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761862704B45100ACF0DE /* SceneDelegate.swift */; };
 		862761892704B45100ACF0DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761882704B45100ACF0DE /* ViewController.swift */; };
 		8627618C2704B45100ACF0DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8627618A2704B45100ACF0DE /* Main.storyboard */; };
 		8627618E2704B45300ACF0DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8627618D2704B45300ACF0DE /* Assets.xcassets */; };
 		862761912704B45300ACF0DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8627618F2704B45300ACF0DE /* LaunchScreen.storyboard */; };
+		862761A32704B7AA00ACF0DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627619D2704B7A900ACF0DE /* MainViewController.swift */; };
+		862761A42704B7AA00ACF0DE /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627619E2704B7A900ACF0DE /* ShareViewController.swift */; };
+		862761A52704B7AA00ACF0DE /* ConfigureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627619F2704B7A900ACF0DE /* ConfigureViewController.swift */; };
+		862761A62704B7AA00ACF0DE /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761A02704B7AA00ACF0DE /* WebViewController.swift */; };
+		862761A72704B7AA00ACF0DE /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761A12704B7AA00ACF0DE /* DayViewController.swift */; };
+		862761A82704B7AA00ACF0DE /* TbcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761A22704B7AA00ACF0DE /* TbcViewController.swift */; };
+		862761B02704B80500ACF0DE /* ButtonAnimatedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761A92704B80300ACF0DE /* ButtonAnimatedModel.swift */; };
+		862761B22704B80500ACF0DE /* CalenderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761AB2704B80400ACF0DE /* CalenderUseCase.swift */; };
+		862761B32704B80500ACF0DE /* CalenderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761AC2704B80400ACF0DE /* CalenderController.swift */; };
+		862761B42704B80500ACF0DE /* CalenderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761AD2704B80400ACF0DE /* CalenderPresenter.swift */; };
+		862761B62704B80500ACF0DE /* DataItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761AF2704B80500ACF0DE /* DataItems.swift */; };
+		862761B82704B85900ACF0DE /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761B72704B85900ACF0DE /* CalenderViewController.swift */; };
+		862761BA2705DCD700ACF0DE /* TbcCalcModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761B92705DCD700ACF0DE /* TbcCalcModel.swift */; };
+		862761DE27089BE800ACF0DE /* LoadDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761DD27089BE800ACF0DE /* LoadDBModel.swift */; };
+		862761E027089C8900ACF0DE /* TbcDataSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761DF27089C8900ACF0DE /* TbcDataSets.swift */; };
+		862761E227089F8F00ACF0DE /* CountDataSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761E127089F8F00ACF0DE /* CountDataSets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4DD80F2F02A3504165794C30 /* Pods-TBCGaman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBCGaman.debug.xcconfig"; path = "Target Support Files/Pods-TBCGaman/Pods-TBCGaman.debug.xcconfig"; sourceTree = "<group>"; };
+		5A70154FF193C33E9A85019A /* Pods_TBCGaman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBCGaman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66D7DFCB44FD2AEB5A14EA1F /* Pods-TBCGaman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBCGaman.release.xcconfig"; path = "Target Support Files/Pods-TBCGaman/Pods-TBCGaman.release.xcconfig"; sourceTree = "<group>"; };
+		86043CB52708D86600DA65FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		86043CBA2709408400DA65FA /* UserIDLoadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDLoadModel.swift; sourceTree = "<group>"; };
 		862761812704B45100ACF0DE /* TBCGaman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBCGaman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		862761842704B45100ACF0DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		862761862704B45100ACF0DE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +48,22 @@
 		8627618D2704B45300ACF0DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		862761902704B45300ACF0DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		862761922704B45300ACF0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8627619D2704B7A900ACF0DE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		8627619E2704B7A900ACF0DE /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		8627619F2704B7A900ACF0DE /* ConfigureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureViewController.swift; sourceTree = "<group>"; };
+		862761A02704B7AA00ACF0DE /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		862761A12704B7AA00ACF0DE /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
+		862761A22704B7AA00ACF0DE /* TbcViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TbcViewController.swift; sourceTree = "<group>"; };
+		862761A92704B80300ACF0DE /* ButtonAnimatedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonAnimatedModel.swift; sourceTree = "<group>"; };
+		862761AB2704B80400ACF0DE /* CalenderUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderUseCase.swift; sourceTree = "<group>"; };
+		862761AC2704B80400ACF0DE /* CalenderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderController.swift; sourceTree = "<group>"; };
+		862761AD2704B80400ACF0DE /* CalenderPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderPresenter.swift; sourceTree = "<group>"; };
+		862761AF2704B80500ACF0DE /* DataItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItems.swift; sourceTree = "<group>"; };
+		862761B72704B85900ACF0DE /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
+		862761B92705DCD700ACF0DE /* TbcCalcModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbcCalcModel.swift; sourceTree = "<group>"; };
+		862761DD27089BE800ACF0DE /* LoadDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDBModel.swift; sourceTree = "<group>"; };
+		862761DF27089C8900ACF0DE /* TbcDataSets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbcDataSets.swift; sourceTree = "<group>"; };
+		862761E127089F8F00ACF0DE /* CountDataSets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDataSets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +71,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77C683142CCA989791A0451E /* Pods_TBCGaman.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86043CB92709406000DA65FA /* NewModel */ = {
+			isa = PBXGroup;
+			children = (
+				86043CBA2709408400DA65FA /* UserIDLoadModel.swift */,
+			);
+			path = NewModel;
+			sourceTree = "<group>";
+		};
 		862761782704B45100ACF0DE = {
 			isa = PBXGroup;
 			children = (
 				862761832704B45100ACF0DE /* TBCGaman */,
 				862761822704B45100ACF0DE /* Products */,
+				EA5E117A8E26EACC1FE4164B /* Pods */,
+				C5523CE179C21BF1A0B80AE6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +107,74 @@
 		862761832704B45100ACF0DE /* TBCGaman */ = {
 			isa = PBXGroup;
 			children = (
-				862761842704B45100ACF0DE /* AppDelegate.swift */,
-				862761862704B45100ACF0DE /* SceneDelegate.swift */,
-				862761882704B45100ACF0DE /* ViewController.swift */,
-				8627618A2704B45100ACF0DE /* Main.storyboard */,
+				86043CB92709406000DA65FA /* NewModel */,
+				8627619A2704B6A700ACF0DE /* Model */,
+				8627619C2704B6D600ACF0DE /* View */,
+				8627619B2704B6B300ACF0DE /* Controller */,
 				8627618D2704B45300ACF0DE /* Assets.xcassets */,
-				8627618F2704B45300ACF0DE /* LaunchScreen.storyboard */,
 				862761922704B45300ACF0DE /* Info.plist */,
+				86043CB52708D86600DA65FA /* GoogleService-Info.plist */,
 			);
 			path = TBCGaman;
+			sourceTree = "<group>";
+		};
+		8627619A2704B6A700ACF0DE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				862761862704B45100ACF0DE /* SceneDelegate.swift */,
+				862761842704B45100ACF0DE /* AppDelegate.swift */,
+				862761A92704B80300ACF0DE /* ButtonAnimatedModel.swift */,
+				862761AC2704B80400ACF0DE /* CalenderController.swift */,
+				862761AD2704B80400ACF0DE /* CalenderPresenter.swift */,
+				862761AB2704B80400ACF0DE /* CalenderUseCase.swift */,
+				862761AF2704B80500ACF0DE /* DataItems.swift */,
+				862761B92705DCD700ACF0DE /* TbcCalcModel.swift */,
+				862761DD27089BE800ACF0DE /* LoadDBModel.swift */,
+				862761DF27089C8900ACF0DE /* TbcDataSets.swift */,
+				862761E127089F8F00ACF0DE /* CountDataSets.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8627619B2704B6B300ACF0DE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				862761882704B45100ACF0DE /* ViewController.swift */,
+				8627619F2704B7A900ACF0DE /* ConfigureViewController.swift */,
+				862761A12704B7AA00ACF0DE /* DayViewController.swift */,
+				8627619D2704B7A900ACF0DE /* MainViewController.swift */,
+				8627619E2704B7A900ACF0DE /* ShareViewController.swift */,
+				862761A22704B7AA00ACF0DE /* TbcViewController.swift */,
+				862761A02704B7AA00ACF0DE /* WebViewController.swift */,
+				862761B72704B85900ACF0DE /* CalenderViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8627619C2704B6D600ACF0DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8627618A2704B45100ACF0DE /* Main.storyboard */,
+				8627618F2704B45300ACF0DE /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C5523CE179C21BF1A0B80AE6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A70154FF193C33E9A85019A /* Pods_TBCGaman.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA5E117A8E26EACC1FE4164B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4DD80F2F02A3504165794C30 /* Pods-TBCGaman.debug.xcconfig */,
+				66D7DFCB44FD2AEB5A14EA1F /* Pods-TBCGaman.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 862761952704B45300ACF0DE /* Build configuration list for PBXNativeTarget "TBCGaman" */;
 			buildPhases = (
+				863C3350874A2C318711656C /* [CP] Check Pods Manifest.lock */,
 				8627617D2704B45100ACF0DE /* Sources */,
 				8627617E2704B45100ACF0DE /* Frameworks */,
 				8627617F2704B45100ACF0DE /* Resources */,
+				45621E15914FDF26289789AD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,10 +239,53 @@
 				862761912704B45300ACF0DE /* LaunchScreen.storyboard in Resources */,
 				8627618E2704B45300ACF0DE /* Assets.xcassets in Resources */,
 				8627618C2704B45100ACF0DE /* Main.storyboard in Resources */,
+				86043CB62708D86600DA65FA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		45621E15914FDF26289789AD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TBCGaman/Pods-TBCGaman-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TBCGaman/Pods-TBCGaman-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TBCGaman/Pods-TBCGaman-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		863C3350874A2C318711656C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TBCGaman-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8627617D2704B45100ACF0DE /* Sources */ = {
@@ -138,8 +293,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				862761892704B45100ACF0DE /* ViewController.swift in Sources */,
+				86043CBB2709408400DA65FA /* UserIDLoadModel.swift in Sources */,
 				862761852704B45100ACF0DE /* AppDelegate.swift in Sources */,
+				862761B82704B85900ACF0DE /* CalenderViewController.swift in Sources */,
+				862761B22704B80500ACF0DE /* CalenderUseCase.swift in Sources */,
+				862761B02704B80500ACF0DE /* ButtonAnimatedModel.swift in Sources */,
+				862761DE27089BE800ACF0DE /* LoadDBModel.swift in Sources */,
+				862761E227089F8F00ACF0DE /* CountDataSets.swift in Sources */,
+				862761B62704B80500ACF0DE /* DataItems.swift in Sources */,
+				862761A42704B7AA00ACF0DE /* ShareViewController.swift in Sources */,
 				862761872704B45100ACF0DE /* SceneDelegate.swift in Sources */,
+				862761BA2705DCD700ACF0DE /* TbcCalcModel.swift in Sources */,
+				862761B32704B80500ACF0DE /* CalenderController.swift in Sources */,
+				862761A82704B7AA00ACF0DE /* TbcViewController.swift in Sources */,
+				862761E027089C8900ACF0DE /* TbcDataSets.swift in Sources */,
+				862761A62704B7AA00ACF0DE /* WebViewController.swift in Sources */,
+				862761B42704B80500ACF0DE /* CalenderPresenter.swift in Sources */,
+				862761A32704B7AA00ACF0DE /* MainViewController.swift in Sources */,
+				862761A52704B7AA00ACF0DE /* ConfigureViewController.swift in Sources */,
+				862761A72704B7AA00ACF0DE /* DayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +455,7 @@
 		};
 		862761962704B45300ACF0DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DD80F2F02A3504165794C30 /* Pods-TBCGaman.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -302,6 +475,7 @@
 		};
 		862761972704B45300ACF0DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66D7DFCB44FD2AEB5A14EA1F /* Pods-TBCGaman.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
