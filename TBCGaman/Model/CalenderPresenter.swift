@@ -18,10 +18,12 @@ class CalendarPresenter: ResponseForCalendar {
 
     var viewLogic: ViewLogic?
     
+    //viewLogicにresponse（daysArray）を送っている
     func responseDateManager(response: [String]) {
         viewLogic?.daysArray = response
     }
     
+    //viewLogicにresponse(weeks)を送っている
     func responseNumberOfWeeks(response: Int) {
         viewLogic?.numberOfWeeks = response
     }

@@ -4,13 +4,13 @@
 //
 //  Created by 近藤大伍 on 2021/09/26.
 //
-
 import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, LoadOKDelegate ,LoadOKDelegate_userID{
+class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, LoadOKDelegate, FirstMonthLoadOKDelegate{
+    
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -42,6 +42,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var dateString = String()
     var countArray = ["gamanCount":Int(),"kituenCount":Int()]
     
+
+    var year = String()//追加
+    var month = String()//追加
+    var day = String()
+//    var firstloadArray:Array<Int> = []//追加
+    var firstGamanCount = Int()//追加
+    var firstSmokeCount = Int()//追加
+    
+    var firstMonthLoadModel = FirstMonthLoadModel()//追加
+    
     
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var gamanButton: UIButton!
@@ -49,71 +59,133 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var buttonAnimated = ButtonAnimatedModel(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, transform: CGAffineTransform(scaleX: 0.95, y: 0.95), alpha: 0.7)
     
     // 211003_山口
-    let userIDLoadModel = UserIDLoadModel()
+//    let userIDLoadModel = UserIDLoadModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadDBModel.loadOKDelegate = self
-        userIDLoadModel.loadOKDelegate = self
         
         if UserDefaults.standard.object(forKey: "gamanIncrement") != nil,UserDefaults.standard.object(forKey: "smokeIncrement") != nil{
             
             gamanIncrement = UserDefaults.standard.object(forKey: "gamanIncrement") as! Int
-//            gamanTotalCount.text = String(gamanIncrement)
             smokeIncrement = UserDefaults.standard.object(forKey: "smokeIncrement") as! Int
             
         }
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
-        dateString = dateFormatter.string(from: date)
-        userIDLoadModel.userIDLoad(date: dateString)
+        dateString = dateFormatter.string(from: date) //  　2021/10/4  <-こんな感じで値を取ってこれる
+      
         
-        if userIDLoadModel.userID == ""{
+        //追加
+        let calendar = Calendar(identifier: .gregorian)//.gregorian→西暦、.japanese→和暦
+        let date = calendar.dateComponents([.year, .month, .day], from: Date()) //何年、何月、何日を取得
+        year = String(date.year!)
+        month = String(date.month!)
+        day = String(date.day!)
+        
+        
+        loadDBModel.userIDLoad(date: dateString)
+        
+    }
+    
+    //追加
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        userID = UserDefaults.standard.object(forKey: "userID") as! String
+        firstMonthLoadModel.firstMonthLoadOKDelegate = self
+        firstMonthLoadModel.firstMonthload(userID: userID,year: year, month: month)
+        
+    }
+    
+    //追加
+    func firstMonthLoadOK(firstloadArray: Array<Int>) {
+        
+        print("daigofirstloadArray2")
+        print(firstloadArray)
+        
+        if firstloadArray == []{
             
+            for day in 1...31 {
+                
+                let calendar = Calendar(identifier: .gregorian)
+                var components = DateComponents()
+                components.year = Int(year)
+                // 日数を求めたい次の月。13になってもOK。ドキュメントにも、月もしくは月数とある
+                components.month = Int(month)
+                // 日数を0にすることで、前の月の最後の日になる
+                components.day = day
+                // 求めたい月の最後の日のDateオブジェクトを得る
+                let date = calendar.date(from: components)!
+                let dayCount = calendar.component(.day, from: date)
+                print("うんちっち")
+                print("\(month)月 \(dayCount)日")
+        
+                db.collection(userID).document(year).collection(month).document("\(dayCount)").setData(["gamanCount" : firstGamanCount as Any,"smokeCount" : firstSmokeCount as Any,"postDate" : Date().timeIntervalSince1970])
+                
+            }
+        }else{
             return
+        }
+        
+        print("daigofirstloadArray3")
+        print(firstloadArray)
+        
+    }
+    
+    
+    func loginOK_userID(check: Int) {
+        if check == 1{
+            userID = loadDBModel.userID
+            loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
+        }
+    }
+    func loadTbcOK(check: Int) {
+        
+        if check == 1{
+            priceOfOne = loadDBModel.tbcDataSets[0].tbcPrice / loadDBModel.tbcDataSets[0].tbcCount
+            priceCount = tbcCalcModel.priceCalc(gamanCount: gamanIncrement, priceOfOne: priceOfOne)
+            
+            lifeSpanCount = tbcCalcModel.lifeSpanCalc(tbcCount: smokeIncrement)
+            //            tableView.reloadData()
+            print(String(gamanIncrement))
+            print("\(smokeIncrement)")
+            print("\(priceCount)円")
+            print("\(lifeSpanCount)")
+            
+            cellSubTitleArray = []
+            
+            
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.separatorStyle = .none
+            
+            shareButton.layer.cornerRadius = 10
+            shareButton.layer.shadowOpacity = 0.5
+            shareButton.layer.shadowRadius = 5
+            shareButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+            shareButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            
+            gamanButton.layer.cornerRadius = 10
+            gamanButton.layer.shadowOpacity = 0.5
+            gamanButton.layer.shadowRadius = 5
+            gamanButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+            gamanButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            
+            kitsuenButton.layer.cornerRadius = 10
+            kitsuenButton.layer.shadowOpacity = 0.5
+            kitsuenButton.layer.shadowRadius = 5
+            kitsuenButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+            kitsuenButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            
+            tableView.reloadData()
             
         }
         
-        cellSubTitleArray = []
-        print(String(gamanIncrement))
-        print("\(smokeIncrement)")
-        print("\(priceCount)円")
-        print("\(lifeSpanCount)")
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        
-        shareButton.layer.cornerRadius = 10
-        shareButton.layer.shadowOpacity = 0.5
-        shareButton.layer.shadowRadius = 5
-        shareButton.layer.shadowOffset = CGSize(width: 2, height: 2)
-        shareButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
-        
-        gamanButton.layer.cornerRadius = 10
-        gamanButton.layer.shadowOpacity = 0.5
-        gamanButton.layer.shadowRadius = 5
-        gamanButton.layer.shadowOffset = CGSize(width: 2, height: 2)
-        gamanButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
-        
-        kitsuenButton.layer.cornerRadius = 10
-        kitsuenButton.layer.shadowOpacity = 0.5
-        kitsuenButton.layer.shadowRadius = 5
-        kitsuenButton.layer.shadowOffset = CGSize(width: 2, height: 2)
-        kitsuenButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
-        
     }
     
-    func loadOK_userID(check: Int) {
-        if check == 1{
-            loadDBModel.loadCountLabel(userID: userIDLoadModel.userID, dateString: dateString)
-            loadDBModel.loadTbcData(userID: userIDLoadModel.userID)
-            userID = userIDLoadModel.userID
-        }
-    }
-    
-    func loadOK(check: Int) {
+    func loadDayCountOK(check: Int) {
         if check == 1{
             
             gamanCountLabel.text = String(loadDBModel.countdataSets[0].gamanCount)
@@ -122,18 +194,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             print(smokeCountLabel.text)
             gamanCount = loadDBModel.countdataSets[0].gamanCount
             smokeCount = loadDBModel.countdataSets[0].smokeCount
-//            tableView.reloadData()
-        }else if check == 2{
-            print(loadDBModel.tbcDataSets)
+            ////            tableView.reloadData()
             
-            priceOfOne = loadDBModel.tbcDataSets[0].tbcPrice / loadDBModel.tbcDataSets[0].tbcCount
-            priceCount = tbcCalcModel.priceCalc(gamanCount: gamanIncrement, priceOfOne: priceOfOne)
-            
-            lifeSpanCount = tbcCalcModel.lifeSpanCalc(tbcCount: smokeIncrement)
-//            tableView.reloadData()
+            loadDBModel.loadTbcData(userID: userID)
             
         }
     }
+    
+    
+    
     
     @objc func tapButton(_ sender:UIButton){
         buttonAnimated.startAnimation(sender: sender)
@@ -159,9 +228,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         print("daigoprice")
         print("\(loadDBModel.tbcDataSets[0].tbcPrice)")
-        var configLabeltext = "※1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice)" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount)" + "に設定中"
+        var configLabeltext = "※1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)" + "に設定中"
         cellStringArray = ["","\(configLabeltext)","","※タバコ1本で寿命が5分半縮むらしいです"]
-
+        
         Cell.layer.masksToBounds = false
         Cell.layer.shadowOffset = CGSize(width: 0, height: 1)
         Cell.layer.shadowOpacity = 1.0
@@ -207,13 +276,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         gamanIncrement = gamanIncrement + 1
         UserDefaults.standard.set(gamanIncrement, forKey: "gamanIncrement")
-//        gamanTotalCount.text = String(gamanIncrement)
         loadDBModel.loadTbcData(userID: userID)
         
         gamanCount = gamanCount + 1
+        print("daigogamanCount")
         print(gamanCount)
-        db.collection(userID).document(dateString).setData(["gamanCount" : gamanCount as Any,"smokeCount" : smokeCount as Any])
-        loadDBModel.loadCountLabel(userID: userID, dateString: dateString)
+        
+        //setDataからupdateDataに変更
+        db.collection(userID).document(year).collection(month).document(day).updateData(["gamanCount" : gamanCount as Any])
+        loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
         tableView.reloadData()
     }
     
@@ -222,12 +293,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         smokeIncrement = smokeIncrement + 1
         UserDefaults.standard.set(smokeIncrement, forKey: "smokeIncrement")
-//        smokeTotalCount.text = String(smokeIncrement)
         loadDBModel.loadTbcData(userID: userID)
         
         smokeCount = smokeCount + 1
-        db.collection(userID).document(dateString).setData(["gamanCount" : gamanCount as Any,"smokeCount" : smokeCount as Any])
-        loadDBModel.loadCountLabel(userID: userID, dateString: dateString)
+        
+        //setDataからupdateDataに変更
+        db.collection(userID).document(year).collection(month).document(day).updateData(["smokeCount" : smokeCount as Any])
+        loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
         tableView.reloadData()
     }
     
@@ -242,5 +314,4 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
      // Pass the selected object to the new view controller.
      }
      */
-    
 }

@@ -6,14 +6,43 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
-class DayViewController: UIViewController {
+
+//protocol CountOfOneDayDlegate {
+//    
+//    func countOfOneDay(gamanCountOfOneDay:Int,kitsuenCountOfOneDay:Int)
+//    
+//}
+
+class DayViewController: UIViewController,LoadOKDelegate {
+    
     
     @IBOutlet weak var swipeCard: UIView!
     @IBOutlet weak var kinenButton: UIButton!
     @IBOutlet weak var kitsuenButton: UIButton!
     @IBOutlet weak var numberView: UIView!
     @IBOutlet weak var swipeView: UIView!
+    
+    @IBOutlet weak var gamanLabel: UILabel!
+    @IBOutlet weak var kitsuenLabel: UILabel!
+    
+    let db = Firestore.firestore()
+    var userID = String()
+    var dateString = String()
+    let loadDBModel = LoadDBModel()
+    let dateFormatter = DateFormatter()
+    let date = Date()
+    
+    var year = String()
+    var month = String()
+    var day = String()
+    
+//    var countOfOneDayDlegate:CountOfOneDayDlegate?
+    var gamanCountOfOneDay = Int()
+    var kitsuenCountOfOneDay = Int()
+    
     var buttonAnimated = ButtonAnimatedModel(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, transform: CGAffineTransform(scaleX: 0.95, y: 0.95), alpha: 0.7)
     
     
@@ -36,50 +65,36 @@ class DayViewController: UIViewController {
         
         numberView.isHidden = true
         
-//        kinenButton.addTarget(self,action: #selector(tapKinenButton(_ :)),for: .touchDown)
-//        kitsuenButton.addTarget(self,action: #selector(tapKitsuenButton(_ :)),for: .touchDown)
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
+        dateString = dateFormatter.string(from: date)
+        
+        let calendar = Calendar(identifier: .gregorian)//.gregorian→西暦、.japanese→和暦
+        let date = calendar.dateComponents([.year, .month, .day], from: Date()) //何年、何月、何日を取得
+        year = String(date.year!)
+        month = String(date.month!)
+//        day = String(date.day!)
+        
+        userID = UserDefaults.standard.object(forKey: "userID") as! String
+        
+        print("daigoviewdidload_loadDayCount")
+        print(userID)
+        print(year)
+        print(month)
+        print(day)
+        loadDBModel.loadOKDelegate = self
+        loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
 
-        
-        
     }
     
-//    @objc func tapKinenButton(_ sender: UIButton){
-//
-//        UIView.animate(withDuration: 0.1,delay: 0.0,options:UIView.AnimationOptions.curveEaseIn,
-//            animations: {() -> Void in
-//                self.swipeCard.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-//                self.swipeCard.alpha = 0.7
-//
-//            }
-//            ,completion: nil
-//        )
-//
-//    }
-
-//    @objc func tapKitsuenButton(_ sender:UIButton){
-//
-//        UIView.animate(withDuration: 0.1,delay: 0.0,options:UIView.AnimationOptions.curveEaseIn,
-//            animations: {() -> Void in
-//                let transform = CGAffineTransform(translationX: 174, y: 0)
-//                self.swipeCard.transform = transform
-//                self.swipeCard.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-//                self.swipeCard.alpha = 0.7
-//
-//            }
-//            ,completion: nil
-//        )
-//
-//    }
-//    func returnAnimation(_ sender:UIView){
-//
-//    UIView.animate(withDuration:0.1,delay:0.0,options:UIView.AnimationOptions.curveEaseIn,animations: {() -> Void in
-//                    sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-//                    sender.alpha = 1
-//                },
-//                completion: nil
-//            )
-//
-//    }
+    
+    func loadDayCountOK(check: Int) {
+        
+        gamanCountOfOneDay = loadDBModel.countdataSets[0].gamanCount
+        kitsuenCountOfOneDay = loadDBModel.countdataSets[0].smokeCount
+        gamanLabel.text = String(gamanCountOfOneDay)
+        kitsuenLabel.text = String(kitsuenCountOfOneDay)
+        
+    }
     
     func leftAnimation(){
         
@@ -167,9 +182,48 @@ class DayViewController: UIViewController {
         
     }
     
+    @IBAction func gamanPlusButton(_ sender: Any) {
+        
+        gamanCountOfOneDay += 1
+        gamanLabel.text = String(gamanCountOfOneDay)
+        
+    }
+    
+  
+    @IBAction func gamanMinusButton(_ sender: Any) {
+        
+        if gamanCountOfOneDay == 0{
+            return
+        }
+        gamanCountOfOneDay -= 1
+        gamanLabel.text = String(gamanCountOfOneDay)
+        
+    }
+    
+    
+    @IBAction func kitsuenPlusButton(_ sender: Any) {
+        
+        kitsuenCountOfOneDay += 1
+        kitsuenLabel.text = String(kitsuenCountOfOneDay)
+    
+    }
+    
+    @IBAction func kitsuenMinusButton(_ sender: Any) {
+        
+        if kitsuenCountOfOneDay == 0{
+            return
+        }
+        kitsuenCountOfOneDay -= 1
+        kitsuenLabel.text = String(kitsuenCountOfOneDay)
+        
+    }
+    
+    
     @IBAction func saveButton(_ sender: Any) {
         
+//        countOfOneDayDlegate?.countOfOneDay(gamanCountOfOneDay: gamanCountOfOneDay, kitsuenCountOfOneDay: kitsuenCountOfOneDay)
         
+        db.collection(userID).document(year).collection(month).document(day).updateData(["smokeCount" : kitsuenCountOfOneDay as Any,"gamanCount":gamanCountOfOneDay as Any])
         
     }
     

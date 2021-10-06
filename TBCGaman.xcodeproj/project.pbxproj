@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		77C683142CCA989791A0451E /* Pods_TBCGaman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A70154FF193C33E9A85019A /* Pods_TBCGaman.framework */; };
 		86043CB62708D86600DA65FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86043CB52708D86600DA65FA /* GoogleService-Info.plist */; };
-		86043CBB2709408400DA65FA /* UserIDLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86043CBA2709408400DA65FA /* UserIDLoadModel.swift */; };
 		862761852704B45100ACF0DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761842704B45100ACF0DE /* AppDelegate.swift */; };
 		862761872704B45100ACF0DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761862704B45100ACF0DE /* SceneDelegate.swift */; };
 		862761892704B45100ACF0DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761882704B45100ACF0DE /* ViewController.swift */; };
@@ -32,6 +31,9 @@
 		862761DE27089BE800ACF0DE /* LoadDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761DD27089BE800ACF0DE /* LoadDBModel.swift */; };
 		862761E027089C8900ACF0DE /* TbcDataSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761DF27089C8900ACF0DE /* TbcDataSets.swift */; };
 		862761E227089F8F00ACF0DE /* CountDataSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862761E127089F8F00ACF0DE /* CountDataSets.swift */; };
+		8660F491270AD5AB0043FA9B /* iPhoneXR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8660F490270AD5AB0043FA9B /* iPhoneXR.storyboard */; };
+		8660F495270AD6A20043FA9B /* iPhone11Pro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8660F494270AD6A20043FA9B /* iPhone11Pro.storyboard */; };
+		8660F4BF270C5E750043FA9B /* FirstMonthLoadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8660F4BE270C5E750043FA9B /* FirstMonthLoadModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +41,6 @@
 		5A70154FF193C33E9A85019A /* Pods_TBCGaman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBCGaman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D7DFCB44FD2AEB5A14EA1F /* Pods-TBCGaman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBCGaman.release.xcconfig"; path = "Target Support Files/Pods-TBCGaman/Pods-TBCGaman.release.xcconfig"; sourceTree = "<group>"; };
 		86043CB52708D86600DA65FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		86043CBA2709408400DA65FA /* UserIDLoadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDLoadModel.swift; sourceTree = "<group>"; };
 		862761812704B45100ACF0DE /* TBCGaman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBCGaman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		862761842704B45100ACF0DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		862761862704B45100ACF0DE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +65,9 @@
 		862761DD27089BE800ACF0DE /* LoadDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDBModel.swift; sourceTree = "<group>"; };
 		862761DF27089C8900ACF0DE /* TbcDataSets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbcDataSets.swift; sourceTree = "<group>"; };
 		862761E127089F8F00ACF0DE /* CountDataSets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDataSets.swift; sourceTree = "<group>"; };
+		8660F490270AD5AB0043FA9B /* iPhoneXR.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = iPhoneXR.storyboard; sourceTree = "<group>"; };
+		8660F494270AD6A20043FA9B /* iPhone11Pro.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = iPhone11Pro.storyboard; sourceTree = "<group>"; };
+		8660F4BE270C5E750043FA9B /* FirstMonthLoadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMonthLoadModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,14 +82,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		86043CB92709406000DA65FA /* NewModel */ = {
-			isa = PBXGroup;
-			children = (
-				86043CBA2709408400DA65FA /* UserIDLoadModel.swift */,
-			);
-			path = NewModel;
-			sourceTree = "<group>";
-		};
 		862761782704B45100ACF0DE = {
 			isa = PBXGroup;
 			children = (
@@ -107,7 +103,6 @@
 		862761832704B45100ACF0DE /* TBCGaman */ = {
 			isa = PBXGroup;
 			children = (
-				86043CB92709406000DA65FA /* NewModel */,
 				8627619A2704B6A700ACF0DE /* Model */,
 				8627619C2704B6D600ACF0DE /* View */,
 				8627619B2704B6B300ACF0DE /* Controller */,
@@ -132,6 +127,7 @@
 				862761DD27089BE800ACF0DE /* LoadDBModel.swift */,
 				862761DF27089C8900ACF0DE /* TbcDataSets.swift */,
 				862761E127089F8F00ACF0DE /* CountDataSets.swift */,
+				8660F4BE270C5E750043FA9B /* FirstMonthLoadModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,6 +152,8 @@
 			children = (
 				8627618A2704B45100ACF0DE /* Main.storyboard */,
 				8627618F2704B45300ACF0DE /* LaunchScreen.storyboard */,
+				8660F490270AD5AB0043FA9B /* iPhoneXR.storyboard */,
+				8660F494270AD6A20043FA9B /* iPhone11Pro.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,8 +235,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				862761912704B45300ACF0DE /* LaunchScreen.storyboard in Resources */,
+				8660F495270AD6A20043FA9B /* iPhone11Pro.storyboard in Resources */,
 				8627618E2704B45300ACF0DE /* Assets.xcassets in Resources */,
 				8627618C2704B45100ACF0DE /* Main.storyboard in Resources */,
+				8660F491270AD5AB0043FA9B /* iPhoneXR.storyboard in Resources */,
 				86043CB62708D86600DA65FA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,7 +293,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				862761892704B45100ACF0DE /* ViewController.swift in Sources */,
-				86043CBB2709408400DA65FA /* UserIDLoadModel.swift in Sources */,
 				862761852704B45100ACF0DE /* AppDelegate.swift in Sources */,
 				862761B82704B85900ACF0DE /* CalenderViewController.swift in Sources */,
 				862761B22704B80500ACF0DE /* CalenderUseCase.swift in Sources */,
@@ -312,6 +311,7 @@
 				862761A32704B7AA00ACF0DE /* MainViewController.swift in Sources */,
 				862761A52704B7AA00ACF0DE /* ConfigureViewController.swift in Sources */,
 				862761A72704B7AA00ACF0DE /* DayViewController.swift in Sources */,
+				8660F4BF270C5E750043FA9B /* FirstMonthLoadModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

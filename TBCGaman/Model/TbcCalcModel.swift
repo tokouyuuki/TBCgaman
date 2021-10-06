@@ -17,6 +17,7 @@ class TbcCalcModel{
         
     }
     
+    
     func lifeSpanCalc(tbcCount:Int) -> String{
         
         let lifeSpanString:String
