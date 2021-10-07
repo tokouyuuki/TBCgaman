@@ -176,7 +176,7 @@ class LoadDBModel {
     //月の我慢本数と喫煙本数を取得するメソッド
     func loadMonth(year:String,month:String,userID:String){
         
-        db.collection(userID).document(year).collection(month).order(by: "postDate").addSnapshotListener { [self] (snapShot, error) in
+        db.collection(userID).document(year).collection(month).addSnapshotListener { [self] (snapShot, error) in
             self.gamanCountDictionary = [:]
             self.smokeCountDictionary = [:]
             if error != nil{

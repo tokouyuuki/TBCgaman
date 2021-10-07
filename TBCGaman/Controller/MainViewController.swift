@@ -201,7 +201,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         print("daigoprice")
         print("\(loadDBModel.tbcDataSets[0].tbcPrice)")
-        var configLabeltext = "※1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)" + "に設定中"
+        var configLabeltext = "※1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)円" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)本" + "に設定中"
         cellStringArray = ["","\(configLabeltext)","","※タバコ1本で寿命が5分半縮むらしいです"]
         
         let cellView = Cell.contentView.viewWithTag(5) as! UIView

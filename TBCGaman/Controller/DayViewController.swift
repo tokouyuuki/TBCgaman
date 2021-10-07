@@ -79,11 +79,6 @@ class DayViewController: UIViewController,LoadOKDelegate {
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
         dateString = dateFormatter.string(from: date)
         
-        let calendar = Calendar(identifier: .gregorian)//.gregorian→西暦、.japanese→和暦
-        let date = calendar.dateComponents([.year, .month, .day], from: Date()) //何年、何月、何日を取得
-        year = String(date.year!)
-        month = String(date.month!)
-        
         dateLabel.text = "\(year)年\(month)月\(day)日"
         
         if UserDefaults.standard.object(forKey: "userID") != nil{
@@ -210,7 +205,7 @@ class DayViewController: UIViewController,LoadOKDelegate {
     
     
     @IBAction func saveButton(_ sender: Any) {
-        db.collection(userID).document(year).collection(month).document(day).updateData(["smokeCount" : kitsuenCountOfOneDay as Any,"gamanCount":gamanCountOfOneDay as Any])
+        db.collection(userID).document(year).collection(month).document(day).setData(["smokeCount" : kitsuenCountOfOneDay as Any,"gamanCount":gamanCountOfOneDay as Any])
         
         print(gamanIncrement)
         gamanIncrement = gamanIncrement + gamantukaitaiCount

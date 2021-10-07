@@ -63,10 +63,9 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
     var dateString = String()
     let dateFormatter = DateFormatter()
     var userID = String()
-    var year = String()//今が何年か入れる
-    var month = String()//今が何月か入れる
-    var day = String()//今が何日か入れる
-    var sendToDay = String()//DayVCに送る値。選択したセルの日にちの情報を入れる。
+    var dayToDayVC = String()//DayVCに送る値。選択したセルの日にちの情報を入れる。
+    var monthToDayVC = String()//DayVCに送る値。選択したセルの月の情報を入れる。
+    var yearToDayVC = String()//DayVCに送る値。選択したセルの月の情報を入れる。
     
     //MARK: Initialize
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -99,19 +98,15 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let calendar = Calendar(identifier: .gregorian)//.gregorian→西暦、.japanese→和暦
-        let date = calendar.dateComponents([.year, .month, .day], from: Date())//何年、何月、何日を取得
-        year = String(date.year!)
-        month = String(date.month!)
-        day = String(date.day!)
-        zellerResult = zellerCongruence(Int(year)!,Int(month)!,1)//１日が何曜日か（日曜なら０、土曜なら６）
+        let moveDate = DateItems.MoveMonth.Request(monthCounter)
+        zellerResult = zellerCongruence(thisYear,thisMonth,1)//１日が何曜日か（日曜なら０、土曜なら６）
         if UserDefaults.standard.object(forKey: "userID") != nil{
             userID = UserDefaults.standard.object(forKey: "userID") as! String
             print(userID)
         }
         
         loadDBModel.loadOKDelegate = self
-        loadDBModel.loadMonth(year: year, month: month, userID: userID)
+        loadDBModel.loadMonth(year: String(moveDate.year), month: String(moveDate.month), userID: userID)
     }
     
     //月の我慢本数、喫煙本数取得完了
@@ -121,7 +116,8 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
         print(gamanCountDictionary["7"])
         self.gamanCountDictionary = gamanCountDictionary
         self.kitsuenCountDictionary = smokeCountDictionary
-        loadDBModel.loadMonthTotal(year: year, month: month, userID: userID)
+        loadDBModel.loadMonthTotal(year: String(thisYear), month: String(thisMonth), userID: userID)
+        collectionView.reloadData()
     }
     
     //月の合計取得完了
@@ -137,7 +133,6 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
         var configLabeltext = "※設定画面で1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)" + "円" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)" + "本に設定中"
         cellStringArray = ["","\(configLabeltext)","","タバコ1本で寿命が5分半縮むらしいです"]
         tableView.reloadData()
-        collectionView.reloadData()
     }
     
     //MARK: Setting
@@ -187,7 +182,6 @@ extension CalendarViewController {
         gamanCountDictionary = [:]
         kitsuenCountDictionary = [:]
         monthCounter += 1
-        loadDBModel.loadMonth(year: year, month: String(Int(month)! + monthCounter), userID: userID)
         commonSettingMoveMonth()
     }
     
@@ -195,9 +189,6 @@ extension CalendarViewController {
         gamanCountDictionary = [:]
         kitsuenCountDictionary = [:]
         monthCounter -= 1
-        print(Int(month)! + monthCounter)
-        
-        loadDBModel.loadMonth(year: year, month: String(Int(month)! - monthCounter), userID: userID)
         commonSettingMoveMonth()
     }
     
@@ -207,6 +198,7 @@ extension CalendarViewController {
         requestForCalendar?.requestNumberOfWeeks(request: moveDate)
         requestForCalendar?.requestDateManager(request: moveDate)
         calendarTitleLabel.text = "\(String(moveDate.year))年\(String(moveDate.month))月"
+        loadDBModel.loadMonth(year: String(moveDate.year), month: String(moveDate.month), userID: userID)
         //        下の書き方はこれと同じ
         //        if isToday = thisYear == moveData.year && thisMonth == moveData.month{
         //            true
@@ -296,10 +288,15 @@ extension CalendarViewController: UICollectionViewDataSource {
         
         let cell:UICollectionViewCell = self.collectionView(collectionView, cellForItemAt: indexPath)
         let calendarlabel = cell.contentView.viewWithTag(1) as! UILabel
+        let moveDate = DateItems.MoveMonth.Request(monthCounter)
         
         print("daigocalendarlabel")
         print(calendarlabel.text!)
-        sendToDay = calendarlabel.text!
+        dayToDayVC = calendarlabel.text!
+        yearToDayVC = String(moveDate.year)
+        monthToDayVC = String(moveDate.month)
+        print(yearToDayVC)
+        print(monthToDayVC)
         
         if indexPath.section == 1 && daysArray[indexPath.row] != ""{
             performSegue(withIdentifier: "DayVC", sender: nil)
@@ -310,7 +307,11 @@ extension CalendarViewController: UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let DayVC = segue.destination as! DayViewController
-        DayVC.day = sendToDay
+        print(monthToDayVC)
+        print(yearToDayVC)
+        DayVC.day = dayToDayVC
+        DayVC.month = monthToDayVC
+        DayVC.year = yearToDayVC
     }
     
     
