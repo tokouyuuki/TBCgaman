@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M5L-FI-h4B">
-                                <rect key="frame" x="0.0" y="530" width="375" height="199"/>
+                                <rect key="frame" x="0.0" y="493" width="375" height="236"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.45098042490000001" green="0.62745100259999997" blue="0.8078432083" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
@@ -30,7 +30,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8Z-cV-3SC">
+                                                <view tag="5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8Z-cV-3SC">
                                                     <rect key="frame" x="14" y="10" width="347" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
@@ -94,7 +94,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QMY-rr-El7">
-                                <rect key="frame" x="0.0" y="87" width="375" height="450"/>
+                                <rect key="frame" x="0.0" y="87" width="375" height="406"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ImC-ou-66R">
@@ -119,14 +119,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我慢本数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdz-ch-tK9">
-                                                    <rect key="frame" x="3" y="37" width="49" height="10"/>
+                                                    <rect key="frame" x="3" y="34" width="49" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="喫煙本数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50l-1I-yQZ">
-                                                    <rect key="frame" x="3" y="47" width="49" height="10"/>
+                                                    <rect key="frame" x="3" y="44" width="49" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <nil key="textColor"/>
@@ -153,6 +153,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="calendarTitleLabel" destination="cru-kU-Zxy" id="WyQ-RT-az8"/>
+                        <outlet property="collectionView" destination="QMY-rr-El7" id="52g-vR-fGA"/>
                         <outlet property="tableView" destination="M5L-FI-h4B" id="88l-xy-eFz"/>
                         <segue destination="cJn-Sh-VqJ" kind="presentation" identifier="DayVC" id="dVn-Bz-UAM"/>
                     </connections>
@@ -241,7 +242,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vtJ-yK-1bb">
-                                <rect key="frame" x="0.0" y="44" width="375" height="479"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="457"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.49003389582457008" green="0.62456386645220818" blue="0.79223091069999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
@@ -252,7 +253,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7U-2k-DDb">
+                                                <view tag="5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7U-2k-DDb">
                                                     <rect key="frame" x="18" y="10" width="339" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
@@ -394,7 +395,6 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
                                         </state>
                                         <connections>
-                                            <action selector="dismissButton:" destination="HDg-58-HwC" eventType="touchUpInside" id="IDn-WL-VJT"/>
                                             <action selector="dismissButton:" destination="cJn-Sh-VqJ" eventType="touchUpInside" id="oD0-YN-MEG"/>
                                         </connections>
                                     </button>
@@ -448,6 +448,9 @@
                                                 <state key="normal" title="＋">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="gamanPlusButton:" destination="cJn-Sh-VqJ" eventType="touchUpInside" id="f9w-4v-Jxx"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWu-um-Jrg">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="33"/>
@@ -456,6 +459,9 @@
                                                 <state key="normal" title="−">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="gamanMinusButton:" destination="cJn-Sh-VqJ" eventType="touchUpInside" id="cJK-uS-RT7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.45098042490000001" green="0.62745100259999997" blue="0.8078432083" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -528,6 +534,9 @@
                                                 <state key="normal" title="＋">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="kitsuenPlusButton:" destination="cJn-Sh-VqJ" eventType="touchUpInside" id="Fqw-H7-tfo"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lmS-YD-CRL">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="33"/>
@@ -536,6 +545,9 @@
                                                 <state key="normal" title="−">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="kitsuenMinusButton:" destination="cJn-Sh-VqJ" eventType="touchUpInside" id="JxF-fJ-1Ae"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.45098042490000001" green="0.62745100259999997" blue="0.8078432083" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -548,8 +560,10 @@
                         <color key="backgroundColor" red="0.68627452850000004" green="0.76862752440000004" blue="0.88235294819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
+                        <outlet property="gamanLabel" destination="0JX-9p-my7" id="36w-r6-Y2t"/>
                         <outlet property="kinenButton" destination="BJh-Cv-mAK" id="T2I-ua-hZr"/>
                         <outlet property="kitsuenButton" destination="oIv-4Y-hIE" id="v4i-z2-JTW"/>
+                        <outlet property="kitsuenLabel" destination="pB6-ui-rrw" id="fyz-7a-PeX"/>
                         <outlet property="numberView" destination="0MI-3S-bSP" id="nFK-y9-cIW"/>
                         <outlet property="swipeCard" destination="KaK-B1-uZs" id="NaD-NR-hLP"/>
                         <outlet property="swipeView" destination="tlX-s6-URE" id="CsK-5T-L5G"/>
@@ -620,7 +634,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タバコ1箱の値段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPe-04-uVp">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タバコ1箱の値段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPe-04-uVp">
                                 <rect key="frame" x="9" y="141" width="358" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -632,7 +646,7 @@
                                     <outletCollection property="gestureRecognizers" destination="Hv6-dC-IeS" appends="YES" id="9eF-H3-GGi"/>
                                 </connections>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タバコの本数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcU-FS-vfD">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タバコの本数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcU-FS-vfD">
                                 <rect key="frame" x="9" y="205" width="358" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -656,12 +670,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bOO-As-h54" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="Hv6-dC-IeS">
                     <connections>
-                        <action selector="priceLabel:" destination="HDg-58-HwC" id="e6P-KO-UmF"/>
+                        <action selector="priceLabel:" destination="HDg-58-HwC" id="GmS-Qc-EJZ"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="KE2-de-e3g">
                     <connections>
-                        <action selector="numberLabel:" destination="HDg-58-HwC" id="7cb-Kt-EF6"/>
+                        <action selector="numberLabel:" destination="HDg-58-HwC" id="eay-1N-2m4"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

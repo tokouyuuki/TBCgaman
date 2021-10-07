@@ -56,9 +56,9 @@ class LoadDBModel {
                     self.userID = userIDString
                     print("★★★★★★★★★★★★★★")
                     print(self.userID)
-                    self.db.collection(self.userID).document(date).setData(["gamanCount":0,"smokeCount":0]) { error in
-                        print(error.debugDescription)
-                    }
+//                    self.db.collection(self.userID).document(date).setData(["gamanCount":0,"smokeCount":0]) { error in
+//                        print(error.debugDescription)
+//                    }
                     self.db.collection("TbcData").document(self.userID).setData(["TbcCount":20,"TbcPrice":500])
                     self.loadOKDelegate?.loginOK_userID!(check: 1)
                 }else{

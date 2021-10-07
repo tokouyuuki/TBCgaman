@@ -105,8 +105,10 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
         month = String(date.month!)
         day = String(date.day!)
         zellerResult = zellerCongruence(Int(year)!,Int(month)!,1)//１日が何曜日か（日曜なら０、土曜なら６）
-        
-        userID = UserDefaults.standard.object(forKey: "userID") as! String
+        if UserDefaults.standard.object(forKey: "userID") != nil{
+            userID = UserDefaults.standard.object(forKey: "userID") as! String
+            print(userID)
+        }
         
         loadDBModel.loadOKDelegate = self
         loadDBModel.loadMonth(year: year, month: month, userID: userID)
@@ -182,14 +184,19 @@ class CalendarViewController: UIViewController, ViewLogic, LoadOKDelegate {
 extension CalendarViewController {
     
     private func nextMonth() {
+        gamanCountDictionary = [:]
+        kitsuenCountDictionary = [:]
         monthCounter += 1
         loadDBModel.loadMonth(year: year, month: String(Int(month)! + monthCounter), userID: userID)
         commonSettingMoveMonth()
     }
     
     private func prevMonth() {
+        gamanCountDictionary = [:]
+        kitsuenCountDictionary = [:]
         monthCounter -= 1
         print(Int(month)! + monthCounter)
+        
         loadDBModel.loadMonth(year: year, month: String(Int(month)! - monthCounter), userID: userID)
         commonSettingMoveMonth()
     }
@@ -273,6 +280,7 @@ extension CalendarViewController: UICollectionViewDataSource {
             
         }else if gamanCountDictionary["\(calendarlabel.text!)"]! > 0 {
             
+            calendarCellImageView.image = UIImage(systemName: "heart.circle.fill")
             calendarCellImageView.isHidden = false
             gamanLabelOfOneDay.isHidden = false
             kitsuenLabelOfDay.isHidden = false
@@ -296,7 +304,7 @@ extension CalendarViewController: UICollectionViewDataSource {
         if indexPath.section == 1 && daysArray[indexPath.row] != ""{
             performSegue(withIdentifier: "DayVC", sender: nil)
         }else{
-            return
+            cell.selectedBackgroundView = nil
         }
     }
     
@@ -318,7 +326,7 @@ extension CalendarViewController: UICollectionViewDataSource {
         if section == 0{
             label.text = dayOfWeekLabel[row]
             cell.selectedBackgroundView = nil
-        }else{
+        }else {
             label.text = daysArray[row]
             if label.text != ""{
                 let selectedView = UIView()
@@ -329,7 +337,7 @@ extension CalendarViewController: UICollectionViewDataSource {
                 cell.selectedBackgroundView = selectedView
                 markToday(label)
             }else{
-                return
+                cell.selectedBackgroundView = nil
             }
         }
     }
@@ -350,22 +358,23 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let weekWidth = Int(collectionView.frame.width) / daysPerWeek
-        let weekHeight = weekWidth
+        let weekHeight = 23
         let dayWidth = weekWidth
-        let dayHeight = (Int(collectionView.frame.height) - weekHeight) / numberOfWeeks
+        let dayHeight = (Int(collectionView.frame.height) - weekHeight - 5) / numberOfWeeks
         return indexPath.section == 0 ? CGSize(width: weekWidth, height: weekHeight) : CGSize(width: dayWidth, height: dayHeight)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let surplus = Int(collectionView.frame.width) % daysPerWeek
         let margin = CGFloat(surplus)/2.0
-        return UIEdgeInsets(top: 0.0, left: margin, bottom: 1.5, right: margin)
+        return UIEdgeInsets(top: 0, left: margin, bottom: 1.5, right: margin)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
+        return 1
+        
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -387,12 +396,14 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let Cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
-        Cell.layer.masksToBounds = false
-        Cell.layer.shadowOffset = CGSize(width: 0, height: 1)
-        Cell.layer.shadowOpacity = 1.0
-        Cell.layer.shadowRadius = 1.0
         Cell.selectionStyle = .none
+        
+        let cellView = Cell.contentView.viewWithTag(5) as! UIView
+        cellView.layer.masksToBounds = false
+        cellView.layer.cornerRadius = 15
+        cellView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        cellView.layer.shadowOpacity = 0.5
+        cellView.layer.shadowRadius = 5
         
         let contentImageView = Cell.contentView.viewWithTag(1) as! UIImageView
         contentImageView.image = UIImage(named: imageNameArray[indexPath.row])

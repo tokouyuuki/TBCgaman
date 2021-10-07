@@ -12,26 +12,27 @@ import FirebaseAuth
 //    func catchData(tbcPrice:String,tbcCount:String)
 //}
 class TbcViewController: UIViewController, LoadOKDelegate{
-   
+    
     
     @IBOutlet weak var tbcPriceLabel: UILabel!
     @IBOutlet weak var tbcCountLabel: UILabel!
     
-     let loadDBModel = LoadDBModel()
-     var tbcCountAc = UIAlertController()
-     var tbcPriceAc = UIAlertController()
-     
-     //追加したよ！！
-     var dateString = String()
-     let dateFormatter = DateFormatter()
-     var year = String()
-     var month = String()
-     var day = String()
-     
-     var userID = String()
-     let date = Date()
-     let db = Firestore.firestore()
-     
+    let loadDBModel = LoadDBModel()
+    var tbcCountAc = UIAlertController()
+    var tbcPriceAc = UIAlertController()
+    var alertAc = UIAlertController()
+    
+    //追加したよ！！
+    var dateString = String()
+    let dateFormatter = DateFormatter()
+    var year = String()
+    var month = String()
+    var day = String()
+    
+    var userID = String()
+    let date = Date()
+    let db = Firestore.firestore()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,20 +100,26 @@ class TbcViewController: UIViewController, LoadOKDelegate{
     }
     
     @IBAction func priceLabel(_ sender: UITapGestureRecognizer) {
+        alertAc = UIAlertController(title: "未入力です", message: "", preferredStyle: .alert)
         tbcPriceAc = UIAlertController(title: "タバコ1箱の値段を入力してください", message: "", preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            guard let textfiels = self.tbcPriceAc.textFields else{
+        let okAction = UIAlertAction(title: "OK", style: .default) { [self] (action) in
+            guard let textfield = self.tbcPriceAc.textFields?.first else{
                 return
             }
             
-            let text = textfiels.first
-            self.tbcPriceLabel.text = "\((text?.text)!)" + "円"
-            print(self.tbcPriceLabel.text)
-            print(self.userID)
-           
-            self.db.collection("TbcData").document(self.userID).setData(["TbcPrice" : Int((text?.text)!)], merge: true)
-            self.tbcPriceAc.textFields?.first?.text = ""
+            
+            if textfield.text == ""{
+                
+                self.present(alertAc, animated: true, completion: nil)
+                
+            }else{
+                self.tbcPriceLabel.text = "\((textfield.text)!)" + "本"
+                print(self.userID)
+                self.db.collection("TbcData").document(self.userID).setData(["TbcPrice" : Int((textfield.text)!)], merge: true)
+                self.tbcPriceAc.textFields?.first?.text = ""
+                self.loadDBModel.loadTbcData(userID: self.userID)
+            }
         }
         
         tbcPriceAc.addTextField { (textField:UITextField) in
@@ -124,24 +131,33 @@ class TbcViewController: UIViewController, LoadOKDelegate{
         
         tbcPriceAc.addAction(okAction)
         tbcPriceAc.addAction(cancelAction)
+        alertAc.addAction(cancelAction)
         present(tbcPriceAc, animated: true, completion: nil)
     }
     
     @IBAction func numberLabel(_ sender: UITapGestureRecognizer) {
+        alertAc = UIAlertController(title: "未入力です", message: "", preferredStyle: .alert)
         tbcCountAc = UIAlertController(title: "タバコ1箱の本数を入力してください", message: "", preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "OK", style: .default) {(action) in
-            guard let textfiels = self.tbcCountAc.textFields else{
+        let okAction = UIAlertAction(title: "OK", style: .default) { [self](action) in
+            guard let textfield = self.tbcCountAc.textFields?.first else{
                 return
             }
             
-            let text = textfiels.first
-            self.tbcCountLabel.text = "\((text?.text)!)" + "本"
-            print(self.userID)
-            self.db.collection(self.userID).document("TbcData").setData(["TbcCount" : Int((text?.text)!)], merge: true)
-            self.tbcCountAc.textFields?.first?.text = ""
-            self.loadDBModel.loadTbcData(userID: self.userID)
-            
+            if textfield.text == ""{
+                
+                self.present(alertAc, animated: true, completion: nil)
+                
+            }else{
+                print("masashi")
+                print(textfield.text)
+                
+                self.tbcCountLabel.text = "\((textfield.text)!)" + "本"
+                print(self.userID)
+                self.db.collection("TbcData").document(self.userID).setData(["TbcCount" : Int((textfield.text)!)], merge: true)
+                self.tbcCountAc.textFields?.first?.text = ""
+                self.loadDBModel.loadTbcData(userID: self.userID)
+            }
         }
         
         tbcCountAc.addTextField { (textField:UITextField) in
@@ -152,6 +168,7 @@ class TbcViewController: UIViewController, LoadOKDelegate{
         
         tbcCountAc.addAction(okAction)
         tbcCountAc.addAction(cancelAction)
+        alertAc.addAction(cancelAction)
         present(tbcCountAc, animated: true, completion: nil)
     }
     

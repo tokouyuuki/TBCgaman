@@ -56,10 +56,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDBModel.loadOKDelegate = self
-        if UserDefaults.standard.object(forKey: "gamanIncrement") != nil,UserDefaults.standard.object(forKey: "smokeIncrement") != nil{
-            gamanIncrement = UserDefaults.standard.object(forKey: "gamanIncrement") as! Int
-            smokeIncrement = UserDefaults.standard.object(forKey: "smokeIncrement") as! Int
-        }
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
         dateString = dateFormatter.string(from: date) //  　2021/10/4  <-こんな感じで値を取ってこれる
@@ -69,15 +65,21 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         year = String(date.year!)
         month = String(date.month!)
         day = String(date.day!)
-        loadDBModel.userIDLoad(date: dateString)
+        
     }
     //追加
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isLeapYear(Int(year)!)
-        userID = UserDefaults.standard.object(forKey: "userID") as! String
-        firstMonthLoadModel.firstMonthLoadOKDelegate = self
-        firstMonthLoadModel.firstMonthload(userID: userID,year: year, month: month)
+        if UserDefaults.standard.object(forKey: "gamanIncrement") != nil{
+            gamanIncrement = UserDefaults.standard.object(forKey: "gamanIncrement") as! Int
+            print("MaingamanIncrement")
+            print("\(gamanIncrement)")
+        }
+        if UserDefaults.standard.object(forKey: "smokeIncrement") != nil{
+            smokeIncrement = UserDefaults.standard.object(forKey: "smokeIncrement") as! Int
+        }
+        loadDBModel.userIDLoad(date: dateString)
     }
     
     func numberOfDays(_ year: Int, _ month: Int) -> Int {
@@ -117,6 +119,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func loginOK_userID(check: Int) {
         if check == 1{
             userID = loadDBModel.userID
+            firstMonthLoadModel.firstMonthLoadOKDelegate = self
+            firstMonthLoadModel.firstMonthload(userID: userID,year: year, month: month)
             loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
         }
     }
@@ -137,6 +141,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             tableView.delegate = self
             tableView.dataSource = self
             tableView.separatorStyle = .none
+            tableView.isScrollEnabled = false
             
             shareButton.layer.cornerRadius = 10
             shareButton.layer.shadowOpacity = 0.5
@@ -186,6 +191,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let Cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        Cell.selectionStyle = .none
         
         print("\(gamanIncrement)")
         
@@ -198,11 +204,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         var configLabeltext = "※1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)" + "に設定中"
         cellStringArray = ["","\(configLabeltext)","","※タバコ1本で寿命が5分半縮むらしいです"]
         
-        Cell.layer.masksToBounds = false
-        Cell.layer.shadowOffset = CGSize(width: 0, height: 1)
-        Cell.layer.shadowOpacity = 1.0
-        Cell.layer.shadowRadius = 1.0
-        Cell.selectionStyle = .none
+        let cellView = Cell.contentView.viewWithTag(5) as! UIView
+        cellView.layer.masksToBounds = false
+        cellView.layer.cornerRadius = 15
+        cellView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        cellView.layer.shadowOpacity = 0.5
+        cellView.layer.shadowRadius = 5
+       
         
         let contentImageView = Cell.contentView.viewWithTag(1) as! UIImageView
         contentImageView.image = UIImage(named: imageNameArray[indexPath.row])

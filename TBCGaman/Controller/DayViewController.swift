@@ -19,6 +19,7 @@ class DayViewController: UIViewController,LoadOKDelegate {
     @IBOutlet weak var swipeView: UIView!
     @IBOutlet weak var gamanLabel: UILabel!
     @IBOutlet weak var kitsuenLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
     var calendarVC:CalendarViewController?
     let db = Firestore.firestore()
@@ -30,9 +31,15 @@ class DayViewController: UIViewController,LoadOKDelegate {
     var year = String()
     var month = String()
     var day = String()
-
-    var gamanCountOfOneDay = Int()
-    var kitsuenCountOfOneDay = Int()
+    
+    var gamanCountOfOneDay = Int() //1日の我慢本数(増減する)
+    var kitsuenCountOfOneDay = Int() //1日の喫煙本数(増減する)
+    var gamanSonomamaCount = Int() //1日の我慢本数(増減しない)
+    var kitsuenSonomamaCount = Int()//1日の喫煙本数(増減しない)
+    var gamantukaitaiCount = Int() //gamanCountOfOneDay - gamanSonomamaCount
+    var kitsuentukaitaiCount = Int() //kitsuenCountOfOneDay - kitsuenSonomamaCount
+    var gamanIncrement = Int() //今までの我慢本数の合計
+    var smokeIncrement = Int() //今までの喫煙本数の合計
     
     var buttonAnimated = ButtonAnimatedModel(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, transform: CGAffineTransform(scaleX: 0.95, y: 0.95), alpha: 0.7)
     
@@ -54,11 +61,20 @@ class DayViewController: UIViewController,LoadOKDelegate {
         swipeView.layer.cornerRadius = 10
         
         numberView.isHidden = true
-      
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if UserDefaults.standard.object(forKey: "gamanIncrement") != nil{
+            gamanIncrement = UserDefaults.standard.object(forKey: "gamanIncrement") as! Int
+        }
+        if UserDefaults.standard.object(forKey: "smokeIncrement") != nil{
+            smokeIncrement = UserDefaults.standard.object(forKey: "smokeIncrement") as! Int
+        }
+        print("DaygamanIncrement")
+        print(gamanIncrement)
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
         dateString = dateFormatter.string(from: date)
@@ -68,8 +84,11 @@ class DayViewController: UIViewController,LoadOKDelegate {
         year = String(date.year!)
         month = String(date.month!)
         
-        userID = UserDefaults.standard.object(forKey: "userID") as! String
+        dateLabel.text = "\(year)年\(month)月\(day)日"
         
+        if UserDefaults.standard.object(forKey: "userID") != nil{
+            userID = UserDefaults.standard.object(forKey: "userID") as! String
+        }
         print("daigoviewdidload_loadDayCount")
         print(userID)
         print(year)
@@ -81,6 +100,9 @@ class DayViewController: UIViewController,LoadOKDelegate {
     }
     
     func loadDayCountOK(check: Int) {
+        gamanSonomamaCount = loadDBModel.countdataSets[0].gamanCount
+        kitsuenSonomamaCount = loadDBModel.countdataSets[0].smokeCount
+        
         gamanCountOfOneDay = loadDBModel.countdataSets[0].gamanCount
         kitsuenCountOfOneDay = loadDBModel.countdataSets[0].smokeCount
         gamanLabel.text = String(gamanCountOfOneDay)
@@ -147,33 +169,57 @@ class DayViewController: UIViewController,LoadOKDelegate {
     
     @IBAction func gamanPlusButton(_ sender: Any) {
         gamanCountOfOneDay += 1
+        gamantukaitaiCount = gamanCountOfOneDay - gamanSonomamaCount
+        print("差分")
+        print("\(gamantukaitaiCount)")
         gamanLabel.text = String(gamanCountOfOneDay)
     }
-  
+    
+    //変更
     @IBAction func gamanMinusButton(_ sender: Any) {
         if gamanCountOfOneDay == 0{
             return
         }
         gamanCountOfOneDay -= 1
+        gamantukaitaiCount = gamanCountOfOneDay - gamanSonomamaCount
+        print("差分")
+        print("\(gamantukaitaiCount)")
         gamanLabel.text = String(gamanCountOfOneDay)
     }
     
+    //変更
     @IBAction func kitsuenPlusButton(_ sender: Any) {
         kitsuenCountOfOneDay += 1
+        kitsuentukaitaiCount =  kitsuenCountOfOneDay - kitsuenSonomamaCount
+        print("差分")
+        print("\(kitsuentukaitaiCount)")
         kitsuenLabel.text = String(kitsuenCountOfOneDay)
     }
     
+    //変更
     @IBAction func kitsuenMinusButton(_ sender: Any) {
         if kitsuenCountOfOneDay == 0{
             return
         }
         kitsuenCountOfOneDay -= 1
+        kitsuentukaitaiCount =  kitsuenCountOfOneDay - kitsuenSonomamaCount
+        print("差分")
+        print("\(kitsuentukaitaiCount)")
         kitsuenLabel.text = String(kitsuenCountOfOneDay)
     }
     
     
     @IBAction func saveButton(_ sender: Any) {
         db.collection(userID).document(year).collection(month).document(day).updateData(["smokeCount" : kitsuenCountOfOneDay as Any,"gamanCount":gamanCountOfOneDay as Any])
+        
+        print(gamanIncrement)
+        gamanIncrement = gamanIncrement + gamantukaitaiCount
+        smokeIncrement = smokeIncrement + kitsuentukaitaiCount
+        
+        UserDefaults.standard.set(gamanIncrement, forKey: "gamanIncrement")
+        print(gamanIncrement)
+        UserDefaults.standard.set(smokeIncrement, forKey: "smokeIncrement")
+        
         dismiss(animated: true, completion: nil)
     }
     
