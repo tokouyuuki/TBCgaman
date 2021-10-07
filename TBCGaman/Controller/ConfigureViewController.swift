@@ -7,17 +7,11 @@
 import UIKit
 
 class ConfigureViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LoadOKDelegate {
-    
-    
-    
-    
    
 
     @IBOutlet weak var tableView: UITableView!
-//    let configurationNameArray = ["ご意見・ご要望・バグ報告","タバコの値段と本数"]
-    var configurationNameArray:Array<String> = []
     
-    //追加したよ！！
+    var configurationNameArray:Array<String> = []
     var loadDBModel = LoadDBModel()
     var userID = String()
     var dateString = String()
@@ -30,7 +24,6 @@ class ConfigureViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -44,7 +37,6 @@ class ConfigureViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    //追加追加！！！！
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -66,14 +58,11 @@ class ConfigureViewController: UIViewController, UITableViewDelegate, UITableVie
     func loadDayCountOK(check: Int) {
         if check == 1{
             loadDBModel.loadTbcData(userID: userID)
-            
         }
     }
     
     func loadTbcOK(check: Int) {
-        
         if check == 1{
-            
             
             var configLabeltext = "1箱" + "\(loadDBModel.tbcDataSets[0].tbcPrice!)" + "円" + "/" + "\(loadDBModel.tbcDataSets[0].tbcCount!)" + "本に設定"
             configurationNameArray = ["ご意見・ご要望・バグ報告","\(configLabeltext)"]
@@ -111,32 +100,21 @@ class ConfigureViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indexPath.row == 0{
-            
             performSegue(withIdentifier: "WebVC", sender: nil)
-            
         }else if indexPath.row == 1{
-            
             performSegue(withIdentifier: "TbcVC", sender: nil)
-            
         }
         
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "WebVC"{
-            
             let WecVC = segue.destination as! WebViewController
-            
         }else if segue.identifier == "TbcVC"{
-            
             let TbcVC = segue.destination as! TbcViewController
-            
         }
-        
     }
     
     /*

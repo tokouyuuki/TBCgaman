@@ -27,13 +27,10 @@ class WebViewController: UIViewController {
         dismissButton.setImage(UIImage(named: "multiply.circle"), for: .normal)
         dismissButton.addTarget(self,action: #selector(dismiss(_ :)),for: .touchUpInside)
         view.addSubview(dismissButton)
-        
     }
     
     @objc func dismiss(_ sender:UIButton){
-        
         dismiss(animated: true, completion: nil)
-        
     }
     
     

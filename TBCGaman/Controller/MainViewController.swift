@@ -11,11 +11,13 @@ import FirebaseFirestore
 
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, LoadOKDelegate, FirstMonthLoadOKDelegate{
     
-    
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var gamanCountLabel: UILabel!
     @IBOutlet weak var smokeCountLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var gamanButton: UIButton!
+    @IBOutlet weak var kitsuenButton: UIButton!
+    var buttonAnimated = ButtonAnimatedModel(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, transform: CGAffineTransform(scaleX: 0.95, y: 0.95), alpha: 0.7)
     
     let cellTitleArray = ["我慢した本数","節約になったお金","喫煙本数","縮んだ寿命"]
     var cellSubTitleArray:Array<String> = []
@@ -25,7 +27,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var priceOfOne = Int()
     
     var loadDBModel = LoadDBModel()
-    
     let date = Date()
     let db = Firestore.firestore()
     let dateFormatter = DateFormatter()
@@ -41,74 +42,57 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var dateString = String()
     var countArray = ["gamanCount":Int(),"kituenCount":Int()]
-    
 
     var year = String()//追加
     var month = String()//追加
     var day = String()
-//    var firstloadArray:Array<Int> = []//追加
+    var firstMonthLoadModel = FirstMonthLoadModel()//追加
     var firstGamanCount = Int()//追加
     var firstSmokeCount = Int()//追加
     
-    var firstMonthLoadModel = FirstMonthLoadModel()//追加
+    let isLeapYear = { (year: Int) in year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) }//tureならば閏年、falseならば平年。Bool型
     
-    
-    @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var gamanButton: UIButton!
-    @IBOutlet weak var kitsuenButton: UIButton!
-    var buttonAnimated = ButtonAnimatedModel(withDuration: 0.1, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, transform: CGAffineTransform(scaleX: 0.95, y: 0.95), alpha: 0.7)
-    
-    // 211003_山口
-//    let userIDLoadModel = UserIDLoadModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadDBModel.loadOKDelegate = self
-        
         if UserDefaults.standard.object(forKey: "gamanIncrement") != nil,UserDefaults.standard.object(forKey: "smokeIncrement") != nil{
-            
             gamanIncrement = UserDefaults.standard.object(forKey: "gamanIncrement") as! Int
             smokeIncrement = UserDefaults.standard.object(forKey: "smokeIncrement") as! Int
-            
         }
         
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyyMMdd", options: 0, locale: Locale(identifier: "ja_JP"))
         dateString = dateFormatter.string(from: date) //  　2021/10/4  <-こんな感じで値を取ってこれる
-      
-        
         //追加
         let calendar = Calendar(identifier: .gregorian)//.gregorian→西暦、.japanese→和暦
         let date = calendar.dateComponents([.year, .month, .day], from: Date()) //何年、何月、何日を取得
         year = String(date.year!)
         month = String(date.month!)
         day = String(date.day!)
-        
-        
         loadDBModel.userIDLoad(date: dateString)
-        
     }
-    
     //追加
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        isLeapYear(Int(year)!)
         userID = UserDefaults.standard.object(forKey: "userID") as! String
         firstMonthLoadModel.firstMonthLoadOKDelegate = self
         firstMonthLoadModel.firstMonthload(userID: userID,year: year, month: month)
-        
     }
     
+    func numberOfDays(_ year: Int, _ month: Int) -> Int {
+        var monthMaxDay = [1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31]
+        if month == 2, isLeapYear(year) {
+            monthMaxDay.updateValue(29, forKey: 2)
+        }
+        return monthMaxDay[month]!
+    }
     //追加
     func firstMonthLoadOK(firstloadArray: Array<Int>) {
-        
         print("daigofirstloadArray2")
         print(firstloadArray)
-        
         if firstloadArray == []{
-            
-            for day in 1...31 {
-                
+            for day in 1...numberOfDays(Int(year)!,Int(month)!) {
                 let calendar = Calendar(identifier: .gregorian)
                 var components = DateComponents()
                 components.year = Int(year)
@@ -121,19 +105,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 let dayCount = calendar.component(.day, from: date)
                 print("うんちっち")
                 print("\(month)月 \(dayCount)日")
-        
                 db.collection(userID).document(year).collection(month).document("\(dayCount)").setData(["gamanCount" : firstGamanCount as Any,"smokeCount" : firstSmokeCount as Any,"postDate" : Date().timeIntervalSince1970])
-                
             }
         }else{
             return
         }
-        
         print("daigofirstloadArray3")
         print(firstloadArray)
-        
     }
-    
     
     func loginOK_userID(check: Int) {
         if check == 1{
@@ -141,21 +120,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             loadDBModel.loadDayCount(userID: userID, year: year, month: month, day: day)
         }
     }
+    
     func loadTbcOK(check: Int) {
-        
         if check == 1{
             priceOfOne = loadDBModel.tbcDataSets[0].tbcPrice / loadDBModel.tbcDataSets[0].tbcCount
             priceCount = tbcCalcModel.priceCalc(gamanCount: gamanIncrement, priceOfOne: priceOfOne)
-            
             lifeSpanCount = tbcCalcModel.lifeSpanCalc(tbcCount: smokeIncrement)
-            //            tableView.reloadData()
+            
             print(String(gamanIncrement))
             print("\(smokeIncrement)")
             print("\(priceCount)円")
             print("\(lifeSpanCount)")
             
             cellSubTitleArray = []
-            
             
             tableView.delegate = self
             tableView.dataSource = self
@@ -180,34 +157,24 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             kitsuenButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
             
             tableView.reloadData()
-            
         }
-        
     }
     
     func loadDayCountOK(check: Int) {
         if check == 1{
-            
             gamanCountLabel.text = String(loadDBModel.countdataSets[0].gamanCount)
             smokeCountLabel.text = String(loadDBModel.countdataSets[0].smokeCount)
             print(gamanCountLabel.text)
             print(smokeCountLabel.text)
             gamanCount = loadDBModel.countdataSets[0].gamanCount
             smokeCount = loadDBModel.countdataSets[0].smokeCount
-            ////            tableView.reloadData()
-            
             loadDBModel.loadTbcData(userID: userID)
-            
         }
     }
-    
-    
-    
     
     @objc func tapButton(_ sender:UIButton){
         buttonAnimated.startAnimation(sender: sender)
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellTitleArray.count
@@ -256,7 +223,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return 110
     }
     
-    
     @IBAction func shareButton(_ sender: UIButton) {
         buttonAnimated.endAnimation(sender: sender)
         performSegue(withIdentifier: "ShareVC", sender: self)
@@ -264,12 +230,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShareVC"{
-            
             let ShareVC = segue.destination as! ShareViewController
-            
         }
     }
-    
     
     @IBAction func gamanButton(_ sender: UIButton) {
         buttonAnimated.endAnimation(sender: sender)

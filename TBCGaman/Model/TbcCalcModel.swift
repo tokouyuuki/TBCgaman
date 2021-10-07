@@ -28,20 +28,18 @@ class TbcCalcModel{
         var second = 0
         
         if shousuuten == 0.5{
-            
             second = 30
-            
         }else if shousuuten == 0{
-            
             second = 0
-            
         }
         
         lifeSpanString = "\(shou)時間\(Amari)分\(second)秒"
-        
         return lifeSpanString
         
     }
+    
+    
+    
     
 }
 
