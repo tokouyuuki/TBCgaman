@@ -12,6 +12,8 @@ class ShareViewController: UIViewController {
 
     @IBOutlet weak var screenshotImageView: UIImageView!
     
+    var screenShotImage = UIImage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +30,15 @@ class ShareViewController: UIViewController {
 
     @IBAction func imageShareButton(_ sender: Any) {
         
+      
+        
+        let items = [screenShotImage] as [Any]
+        
+        //アクティビティビューに載せてシェア
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        present(activityVC, animated: true, completion: nil)
+        
         
     }
     
@@ -35,6 +46,9 @@ class ShareViewController: UIViewController {
         
         
     }
+    
+    
+    
     
     /*
     // MARK: - Navigation
