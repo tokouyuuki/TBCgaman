@@ -52,6 +52,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     let isLeapYear = { (year: Int) in year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) }//tureならば閏年、falseならば平年。Bool型
     
+    var screenShotImage = UIImage()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,18 +151,22 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             shareButton.layer.shadowRadius = 5
             shareButton.layer.shadowOffset = CGSize(width: 2, height: 2)
             shareButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            shareButton.addTarget(self, action: #selector(tapOutsideButton(_:)), for: .touchUpOutside)
+            
             
             gamanButton.layer.cornerRadius = 10
             gamanButton.layer.shadowOpacity = 0.5
             gamanButton.layer.shadowRadius = 5
             gamanButton.layer.shadowOffset = CGSize(width: 2, height: 2)
             gamanButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            gamanButton.addTarget(self, action: #selector(tapOutsideButton(_:)), for: .touchUpOutside)
             
             kitsuenButton.layer.cornerRadius = 10
             kitsuenButton.layer.shadowOpacity = 0.5
             kitsuenButton.layer.shadowRadius = 5
             kitsuenButton.layer.shadowOffset = CGSize(width: 2, height: 2)
             kitsuenButton.addTarget(self,action: #selector(tapButton(_ :)),for: .touchDown)
+            kitsuenButton.addTarget(self, action: #selector(tapOutsideButton(_:)), for: .touchUpOutside)
             
             tableView.reloadData()
         }
@@ -179,6 +186,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @objc func tapButton(_ sender:UIButton){
         buttonAnimated.startAnimation(sender: sender)
+    }
+    
+    @objc func tapOutsideButton(_ sender:UIButton){
+        buttonAnimated.endAnimation(sender: sender)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -232,6 +243,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     @IBAction func shareButton(_ sender: UIButton) {
+        
+        //スクリーンショットを撮る
+        takeScreenShot()
+        
         buttonAnimated.endAnimation(sender: sender)
         performSegue(withIdentifier: "ShareVC", sender: self)
     }
@@ -239,6 +254,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShareVC"{
             let ShareVC = segue.destination as! ShareViewController
+            
+            ShareVC.screenShotImage = screenShotImage
+            print("\(screenShotImage)")
+            
         }
     }
     
@@ -274,6 +293,23 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.reloadData()
     }
     
+    func takeScreenShot(){
+        
+        let width = CGFloat(UIScreen.main.bounds.size.width)
+        let height = CGFloat(UIScreen.main.bounds.size.height/1.3)
+        let size = CGSize(width: width, height: height)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        
+        //viewに書き出す
+        self.view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        screenShotImage = UIGraphicsGetImageFromCurrentImageContext()!
+        print("\(screenShotImage)")
+        UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        
+    }
     
     
     /*

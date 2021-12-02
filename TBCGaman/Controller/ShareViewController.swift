@@ -17,6 +17,8 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        screenshotImageView.image = screenShotImage
+       
         
     }
   
@@ -43,6 +45,8 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func shareButton(_ sender: Any) {
+        
+      
         
         
     }
