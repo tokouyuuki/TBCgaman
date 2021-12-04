@@ -259,8 +259,8 @@ extension CalendarViewController: UICollectionViewDataSource {
         
         print("cellForItemAt")
         print(calendarlabel.text!)
-        print(gamanCountDictionary["\(calendarlabel.text!)!"])
-        print(kitsuenCountDictionary["\(calendarlabel.text!)!"])
+        print(gamanCountDictionary["\(calendarlabel.text!)"])
+        print(kitsuenCountDictionary["\(calendarlabel.text!)"])
         if calendarlabel.text! == "" || indexPath.section == 0 || kitsuenCountDictionary["\(calendarlabel.text!)"] == nil ||  gamanCountDictionary["\(calendarlabel.text!)"] == nil{
             return cell
         }else if kitsuenCountDictionary["\(calendarlabel.text!)"]! > 0 && gamanCountDictionary["\(calendarlabel.text!)"]! > 0{
